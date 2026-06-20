@@ -16,12 +16,11 @@ const config: Config = {
           DEFAULT: '#1A1A1A',
           hover: '#2d2d2d',
         },
-        gold: '#B8A88A',
+        gold: '#C2A87A',
       },
       fontFamily: {
         serif: ['"Noto Serif Hebrew"', '"Frank Ruhl Libre"', 'serif'],
         sans: ['Heebo', 'Assistant', 'system-ui', 'sans-serif'],
-        display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
       },
       animation: {
         'fade-up': 'fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both',
@@ -38,6 +37,7 @@ const config: Config = {
       },
       boxShadow: {
         paper: '0 1px 3px rgba(26,26,26,0.04), 0 4px 16px rgba(26,26,26,0.04), 0 0 0 1px rgba(184,168,138,0.06)',
+        card: '0 2px 4px rgba(0,0,0,0.02), 0 8px 24px rgba(0,0,0,0.05), 0 32px 80px rgba(0,0,0,0.07)',
       },
     },
   },

@@ -23,7 +23,7 @@ export default function SummaryBar({ guests }: Props) {
     {
       label: 'ענו',
       value: responded.length,
-      sub: guests.length > 0 ? `${Math.round(responded.length / guests.length * 100)}%` : null,
+      sub: guests.length > 0 ? `${responded.length} / ${guests.length} משפחות (${Math.round(responded.length / guests.length * 100)}%)` : `0 / 0 משפחות`,
     },
     {
       label: 'מגיעים',
@@ -35,10 +35,10 @@ export default function SummaryBar({ guests }: Props) {
   return (
     <div className="grid grid-cols-3 gap-3 mb-6">
       {stats.map(({ label, value, sub }) => (
-        <div key={label} className="bg-white rounded-2xl p-4 text-center shadow-sm">
-          <p className="text-3xl font-serif font-bold text-charcoal">{value}</p>
-          {sub && <p className="text-xs text-charcoal/40 font-sans mt-0.5">{sub}</p>}
-          <p className="text-xs text-charcoal/60 mt-1">{label}</p>
+        <div key={label} className="bg-white rounded-2xl p-4 text-center shadow-sm border border-black/[0.06]">
+          <p className="text-4xl font-sans font-semibold text-charcoal">{value}</p>
+          {sub && <p className="text-xs text-charcoal/60 font-sans mt-0.5">{sub}</p>}
+          <p className="text-sm text-charcoal/70 font-medium mt-1">{label}</p>
         </div>
       ))}
     </div>

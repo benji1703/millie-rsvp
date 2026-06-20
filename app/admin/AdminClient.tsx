@@ -99,25 +99,25 @@ export default function AdminClient({ initialGuests }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-cream p-4 md:p-8">
+    <div className="min-h-screen bg-[#F5F0E8] p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="font-serif text-3xl font-normal text-charcoal">ניהול הזמנות</h1>
-            <p className="text-charcoal/40 text-xs tracking-widest uppercase font-sans mt-1">בריתה מילי ארביב | 3.7.2026</p>
+            <h1 className="font-serif text-3xl font-light text-charcoal">ניהול הזמנות</h1>
+            <p className="text-charcoal/65 text-xs tracking-widest uppercase font-sans mt-1">בריתה מילי ארביב | 3.7.2026</p>
             {lastRefreshed && (
-              <p className="text-xs text-charcoal/30 font-sans mt-1">
+              <p className="text-xs text-charcoal/55 font-sans mt-1">
                 עודכן לאחרונה: {lastRefreshed.toLocaleTimeString('he-IL')}
               </p>
             )}
           </div>
           <div className="flex items-center">
-            <button onClick={poll} className="text-xs text-charcoal/40 hover:text-charcoal transition ml-3">
+            <button onClick={poll} className="text-sm text-charcoal/65 hover:text-charcoal transition ml-3">
               ↻ רענן
             </button>
             <button
               onClick={() => signOut({ callbackUrl: '/admin/login' })}
-              className="text-xs text-charcoal/30 hover:text-charcoal/60 tracking-widest uppercase font-sans transition"
+              className="text-sm text-charcoal/55 hover:text-charcoal/80 tracking-widest uppercase font-sans transition"
             >
               התנתק
             </button>
@@ -133,7 +133,7 @@ export default function AdminClient({ initialGuests }: Props) {
           placeholder="חיפוש לפי שם..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full bg-white border border-parchment rounded-xl px-4 py-2.5 text-sm font-sans focus:outline-none focus:ring-1 focus:ring-gold/50 mb-4"
+          className="w-full bg-white border border-black/[0.10] rounded-xl px-4 py-2.5 text-sm font-sans focus:outline-none focus:ring-1 focus:ring-black/20 mb-4"
         />
         <GuestTable guests={guests} sort={sort} order={order} onSort={onSort} onUpdated={handleUpdated} onDeleted={handleDeleted} />
       </div>

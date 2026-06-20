@@ -10,7 +10,22 @@ interface Props {
   onSuccess: (guestCount: number, childrenCount: number) => void
 }
 
-const counterBtn = 'w-11 h-11 rounded-full border border-charcoal/20 bg-transparent text-charcoal text-2xl font-light hover:border-charcoal/50 hover:bg-parchment/40 active:scale-95 transition-all touch-manipulation select-none cursor-pointer'
+const counterBtn = 'w-12 h-12 rounded-full border border-black/[0.12] bg-transparent text-charcoal/65 text-2xl font-light hover:border-black/30 hover:text-charcoal active:scale-95 transition-all touch-manipulation select-none cursor-pointer'
+
+function Counter({ value, onDec, onInc, label }: { value: number; onDec: () => void; onInc: () => void; label: string }) {
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <div className="flex items-center gap-7">
+        <button onClick={onDec} className={counterBtn}>−</button>
+        <span className="font-sans text-[72px] font-light text-charcoal w-16 text-center tabular-nums leading-none">
+          {value}
+        </span>
+        <button onClick={onInc} className={counterBtn}>+</button>
+      </div>
+      <p className="text-[11px] tracking-[0.15em] uppercase font-sans font-light text-charcoal/55">{label}</p>
+    </div>
+  )
+}
 
 export default function RsvpFormStep({ guestId, defaultCount, defaultChildrenCount, childrenAllowed, onSuccess }: Props) {
   const [guestCount, setGuestCount] = useState(Math.max(1, defaultCount))
@@ -34,36 +49,38 @@ export default function RsvpFormStep({ guestId, defaultCount, defaultChildrenCou
 
   return (
     <RsvpCard centered={false}>
-      <h2 className="font-serif text-2xl font-normal text-charcoal text-center mb-1">כמה אנשים מגיעים?</h2>
-      <p className="text-center text-charcoal/40 text-sm font-sans mb-8">כולל את עצמך</p>
+      <div className="divider-line w-10 mb-7" />
 
-      <div className="flex items-center justify-center gap-6 mb-2">
-        <button onClick={() => setGuestCount((c) => Math.max(1, c - 1))} className={counterBtn}>−</button>
-        <span className="font-serif text-6xl font-light text-charcoal w-16 text-center tabular-nums">
-          {guestCount}
-        </span>
-        <button onClick={() => setGuestCount((c) => Math.min(15, c + 1))} className={counterBtn}>+</button>
+      <h2 className="font-serif text-[26px] font-light text-charcoal text-center mb-1">כמה אנשים מגיעים?</h2>
+      <p className="text-center text-charcoal/55 text-[14px] font-sans font-light mb-9">כולל את עצמך</p>
+
+      <div className="flex flex-col items-center mb-4">
+        <Counter
+          value={guestCount}
+          onDec={() => setGuestCount((c) => Math.max(1, c - 1))}
+          onInc={() => setGuestCount((c) => Math.min(15, c + 1))}
+          label="מבוגרים"
+        />
       </div>
-      <p className="text-center text-xs text-charcoal/30 font-sans mb-8">מבוגרים</p>
 
       {childrenAllowed && (
-        <div className="mt-2 pt-6 border-t border-parchment">
-          <h3 className="font-serif text-xl font-normal text-charcoal text-center mb-1">כמה ילדים?</h3>
-          <p className="text-center text-charcoal/40 text-xs font-sans mb-6">ילדים עד גיל 12</p>
-          <div className="flex items-center justify-center gap-6 mb-2">
-            <button onClick={() => setChildrenCount((c) => Math.max(0, c - 1))} className={counterBtn}>−</button>
-            <span className="font-serif text-5xl font-light text-charcoal w-16 text-center tabular-nums">
-              {childrenCount}
-            </span>
-            <button onClick={() => setChildrenCount((c) => Math.min(20, c + 1))} className={counterBtn}>+</button>
+        <div className="mt-4 pt-7 border-t border-black/[0.07]">
+          <h3 className="font-serif text-[22px] font-light text-charcoal text-center mb-1">כמה ילדים?</h3>
+          <p className="text-center text-charcoal/55 text-[13px] font-sans font-light mb-6">ילדים עד גיל 12</p>
+          <div className="flex flex-col items-center">
+            <Counter
+              value={childrenCount}
+              onDec={() => setChildrenCount((c) => Math.max(0, c - 1))}
+              onInc={() => setChildrenCount((c) => Math.min(20, c + 1))}
+              label="ילדים"
+            />
           </div>
-          <p className="text-center text-xs text-charcoal/30 font-sans mb-2">ילדים</p>
         </div>
       )}
 
       {error && <p className="text-red-500 text-sm text-center font-sans mt-4 mb-2">{error}</p>}
 
-      <button onClick={handleSubmit} disabled={loading} className="btn-primary mt-6 w-full py-4 disabled:cursor-not-allowed">
+      <button onClick={handleSubmit} disabled={loading} className="btn-primary mt-8 w-full py-[17px] disabled:cursor-not-allowed">
         {loading ? 'שולח...' : 'אשר הגעה'}
       </button>
     </RsvpCard>

@@ -11,7 +11,7 @@ const STATUS_LABELS: Record<string, string> = {
   declined: 'לא מגיע',
 }
 const STATUS_COLORS: Record<string, string> = {
-  pending: 'text-charcoal/40',
+  pending: 'text-charcoal/60',
   confirmed: 'text-green-600',
   declined: 'text-red-400',
 }
@@ -179,7 +179,7 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
       {guests.map((guest) => {
         const isEditing = editingId === guest.id
         return (
-          <div key={guest.id} className="bg-white rounded-2xl shadow-sm border border-parchment/60 overflow-hidden">
+          <div key={guest.id} className="bg-white rounded-2xl shadow-sm border border-black/[0.07] overflow-hidden">
             {isEditing ? (
               <div className="p-4 space-y-3">
                 <input className={inputCls} value={editData.name} onChange={(e) => setEditData(d => ({ ...d, name: e.target.value }))} placeholder="שם" />
@@ -201,7 +201,7 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
                 </div>
                 <div className="flex gap-2">
                   <button onClick={() => saveEdit(guest)} disabled={saving || !editData.name.trim()} className="flex-1 bg-charcoal text-cream text-sm py-2.5 rounded-xl font-medium disabled:opacity-40">{saving ? '...' : 'שמור'}</button>
-                  <button onClick={cancelEdit} className="flex-1 bg-parchment text-charcoal text-sm py-2.5 rounded-xl">ביטול</button>
+                  <button onClick={cancelEdit} className="flex-1 bg-black/[0.06] text-charcoal text-sm py-2.5 rounded-xl">ביטול</button>
                 </div>
               </div>
             ) : (
@@ -212,29 +212,29 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
                     <div className="flex items-center gap-2 mt-1 flex-wrap">
                       <span className={`text-xs font-medium ${STATUS_COLORS[guest.rsvp_status]}`}>{STATUS_LABELS[guest.rsvp_status]}</span>
                       <span className="text-charcoal/20 text-xs">·</span>
-                      <span className="text-xs text-charcoal/50">
+                      <span className="text-xs text-charcoal/65">
                         {guest.guest_count ?? '—'} אורחים
-                        {guest.children_allowed && <span className="text-charcoal/35"> ({guest.children_count ?? 0} ילדים)</span>}
+                        {guest.children_allowed && <span className="text-charcoal/55"> ({guest.children_count ?? 0} ילדים)</span>}
                       </span>
                       {guest.phone && (
                         <>
-                          <span className="text-charcoal/20 text-xs">·</span>
-                          <span className="text-xs text-charcoal/40 font-mono" dir="ltr">{guest.phone}</span>
+                          <span className="text-charcoal/30 text-xs">·</span>
+                          <span className="text-xs text-charcoal/65 font-mono" dir="ltr">{guest.phone}</span>
                         </>
                       )}
                       {guest.last_activity_at && (
                         <>
-                          <span className="text-charcoal/20 text-xs">·</span>
-                          <span className="text-xs text-charcoal/30">עדכון: {formatActivity(guest.last_activity_at)}</span>
+                          <span className="text-charcoal/30 text-xs">·</span>
+                          <span className="text-xs text-charcoal/55">עדכון: {formatActivity(guest.last_activity_at)}</span>
                         </>
                       )}
                     </div>
                   </div>
                   <div className="flex gap-1 shrink-0">
-                    <button onClick={() => openAuditModal(guest.id)} className="p-2 text-charcoal/30 hover:text-charcoal hover:bg-parchment rounded-lg transition-all" title="היסטוריה">
+                    <button onClick={() => openAuditModal(guest.id)} className="p-2 text-charcoal/50 hover:text-charcoal hover:bg-black/[0.05] rounded-lg transition-all" title="היסטוריה">
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                     </button>
-                    <button onClick={() => startEdit(guest)} className="p-2 text-charcoal/30 hover:text-charcoal hover:bg-parchment rounded-lg transition-all">
+                    <button onClick={() => startEdit(guest)} className="p-2 text-charcoal/50 hover:text-charcoal hover:bg-black/[0.05] rounded-lg transition-all">
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                     </button>
                     <button onClick={() => deleteGuest(guest)} className="p-2 text-charcoal/20 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all">
@@ -242,21 +242,21 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
                     </button>
                   </div>
                 </div>
-                <div className="border-t border-parchment/60 flex">
+                <div className="border-t border-black/[0.07] flex">
                   {guest.phone && (
                     <a href={buildWhatsAppUrl(guest)} target="_blank" rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium text-emerald-700 hover:bg-emerald-50 transition-colors border-l border-parchment/60">
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium text-emerald-700 hover:bg-emerald-50 transition-colors border-l border-black/[0.07]">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                       וואטסאפ
                     </a>
                   )}
                   <button onClick={() => copyMessage(guest)}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs text-charcoal/50 hover:bg-parchment/50 transition-colors border-l border-parchment/60">
+                    className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs text-charcoal/65 hover:bg-black/[0.04] transition-colors border-l border-black/[0.07]">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                     {copiedMsg === guest.id ? 'הועתק ✓' : 'הודעה'}
                   </button>
                   <button onClick={() => copyLink(guest)}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs text-charcoal/50 hover:bg-parchment/50 transition-colors border-l border-parchment/60">
+                    className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs text-charcoal/65 hover:bg-black/[0.04] transition-colors border-l border-black/[0.07]">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                     {copied === guest.id ? 'הועתק ✓' : 'לינק'}
                   </button>
@@ -277,7 +277,7 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
   return (
     <>
       {mobileList}
-      <div className="hidden md:block bg-white border border-parchment rounded-xl shadow-paper overflow-hidden">
+      <div className="hidden md:block bg-white border border-black/[0.07] rounded-xl shadow-sm overflow-hidden">
       <table className="table-fixed w-full text-sm">
         <colgroup>
           <col className="w-[19%]" />
@@ -288,18 +288,18 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
           <col />
         </colgroup>
         <thead>
-          <tr className="bg-parchment/50 border-b border-parchment">
-            <th onClick={() => onSort('name')} className={`py-2.5 px-3 text-right text-xs font-medium tracking-wide ${sort === 'name' ? 'text-charcoal/70' : 'text-charcoal/50'} ${thSortCls}`}>
+          <tr className="bg-black/[0.03] border-b border-black/[0.07]">
+            <th onClick={() => onSort('name')} className={`py-2.5 px-3 text-right text-xs font-medium tracking-wide ${sort === 'name' ? 'text-charcoal/80' : 'text-charcoal/70'} ${thSortCls}`}>
               <span className="inline-flex items-center gap-1.5">שם <SortIcon col="name" /></span>
             </th>
-            <th className="py-2.5 px-3 text-center text-xs font-medium text-charcoal/50 tracking-wide">טלפון</th>
-            <th onClick={() => onSort('rsvp_status')} className={`py-2.5 px-3 text-right text-xs font-medium tracking-wide ${sort === 'rsvp_status' ? 'text-charcoal/70' : 'text-charcoal/50'} ${thSortCls}`}>
+            <th className="py-2.5 px-3 text-center text-xs font-medium text-charcoal/70 tracking-wide">טלפון</th>
+            <th onClick={() => onSort('rsvp_status')} className={`py-2.5 px-3 text-right text-xs font-medium tracking-wide ${sort === 'rsvp_status' ? 'text-charcoal/80' : 'text-charcoal/70'} ${thSortCls}`}>
               <span className="inline-flex items-center gap-1.5">סטטוס <SortIcon col="rsvp_status" /></span>
             </th>
-            <th onClick={() => onSort('guest_count')} className={`py-2.5 px-3 text-center text-xs font-medium tracking-wide ${sort === 'guest_count' ? 'text-charcoal/70' : 'text-charcoal/50'} ${thSortCls}`}>
-              <span className="inline-flex items-center justify-center gap-1.5">אורחים <SortIcon col="guest_count" /></span>
+            <th onClick={() => onSort('guest_count')} className={`py-2.5 px-3 text-right text-xs font-medium tracking-wide ${sort === 'guest_count' ? 'text-charcoal/80' : 'text-charcoal/70'} ${thSortCls}`}>
+              <span className="inline-flex items-center gap-1.5 mr-2">אורחים <SortIcon col="guest_count" /></span>
             </th>
-            <th onClick={() => onSort('last_activity')} className={`py-2.5 px-3 text-center text-xs font-medium tracking-wide ${sort === 'last_activity' ? 'text-charcoal/70' : 'text-charcoal/50'} ${thSortCls}`}>
+            <th onClick={() => onSort('last_activity')} className={`py-2.5 px-3 text-center text-xs font-medium tracking-wide ${sort === 'last_activity' ? 'text-charcoal/80' : 'text-charcoal/70'} ${thSortCls}`}>
               <span className="inline-flex items-center justify-center gap-1.5">עדכון <SortIcon col="last_activity" /></span>
             </th>
             <th className="py-2.5 px-3" />
@@ -310,7 +310,7 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
             const isEditing = editingId === guest.id
             return (
               <React.Fragment key={guest.id}>
-                <tr className="border-b border-parchment/60 hover:bg-cream/40 transition-colors">
+                <tr className="border-b border-black/[0.06] hover:bg-black/[0.02] transition-colors">
                   <td className="py-2.5 px-3 font-medium">
                     {isEditing ? (
                       <input
@@ -322,7 +322,7 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
                       guest.name
                     )}
                   </td>
-                  <td className="py-2.5 px-3 text-charcoal/60 font-mono text-xs text-center" dir="ltr">
+                  <td className="py-2.5 px-3 text-charcoal/70 font-mono text-xs text-center" dir="ltr">
                     {isEditing ? (
                       <input
                         className={inputCls}
@@ -349,9 +349,9 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
                       <span className={`font-medium ${STATUS_COLORS[guest.rsvp_status]}`}>{STATUS_LABELS[guest.rsvp_status]}</span>
                     )}
                   </td>
-                  <td className="py-2.5 px-3 text-center">
+                  <td className="py-2.5 px-3 text-right">
                     {isEditing ? (
-                      <div className="flex flex-row items-center gap-1.5 justify-center flex-nowrap">
+                      <div className="flex flex-row items-center gap-1.5 justify-end flex-nowrap">
                         <input
                           type="number"
                           min="1"
@@ -379,15 +379,15 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
                         )}
                       </div>
                     ) : (
-                      <span>
+                      <span className="mr-2">
                         {guest.guest_count ?? '—'}
                         {guest.children_allowed && (
-                          <span className="text-charcoal/40 text-xs"> ({guest.children_count ?? 0})</span>
+                          <span className="text-charcoal/60 text-xs"> ({guest.children_count ?? 0})</span>
                         )}
                       </span>
                     )}
                   </td>
-                  <td className="py-2.5 px-3 text-center text-xs text-charcoal/40 font-mono">
+                  <td className="py-2.5 px-3 text-center text-xs text-charcoal/60 font-mono">
                     {formatActivity(guest.last_activity_at ?? null)}
                   </td>
                   <td className="py-2 px-3">
@@ -403,7 +403,7 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
                           </button>
                           <button
                             onClick={cancelEdit}
-                            className="text-xs bg-parchment px-3 py-1 rounded hover:bg-gold/10 transition"
+                            className="text-xs bg-black/[0.05] text-charcoal/70 px-3 py-1 rounded hover:bg-black/[0.09] transition"
                           >
                             ✗
                           </button>
@@ -412,7 +412,7 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
                         <>
                           <button
                             onClick={() => toggleAudit(guest.id)}
-                            className="p-1.5 text-charcoal/20 hover:text-charcoal/60 hover:bg-parchment rounded transition-all"
+                            className="p-1.5 text-charcoal/45 hover:text-charcoal hover:bg-black/[0.05] rounded transition-all"
                             title="היסטוריה"
                           >
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -434,7 +434,7 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
                           </button>
                           <button
                             onClick={() => startEdit(guest)}
-                            className="p-1.5 text-charcoal/30 hover:text-charcoal hover:bg-parchment rounded transition-all"
+                            className="p-1.5 text-charcoal/50 hover:text-charcoal hover:bg-black/[0.05] rounded transition-all"
                             title="ערוך"
                           >
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -457,7 +457,7 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
                           )}
                           <button
                             onClick={() => copyMessage(guest)}
-                            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded text-xs font-sans text-charcoal/60 bg-parchment hover:bg-gold/10 transition-colors whitespace-nowrap"
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded text-xs font-sans text-charcoal/70 bg-black/[0.04] hover:bg-black/[0.08] transition-colors whitespace-nowrap"
                           >
                             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
@@ -466,7 +466,7 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
                           </button>
                           <button
                             onClick={() => copyLink(guest)}
-                            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded text-xs font-sans text-charcoal/60 bg-parchment hover:bg-gold/10 transition-colors whitespace-nowrap"
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded text-xs font-sans text-charcoal/70 bg-black/[0.04] hover:bg-black/[0.08] transition-colors whitespace-nowrap"
                           >
                             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                               <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
@@ -484,36 +484,36 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
                     (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
                   )
                   return (
-                    <tr className="bg-parchment/20">
+                    <tr className="bg-black/[0.02]">
                       <td colSpan={6} className="px-4 pb-3 pt-1">
                         {auditLoading === guest.id ? (
-                          <p className="text-xs text-charcoal/40 py-2 font-sans">טוען...</p>
+                          <p className="text-xs text-charcoal/65 py-2 font-sans">טוען...</p>
                         ) : entries.length === 0 ? (
-                          <p className="text-xs text-charcoal/40 py-2 font-sans">אין פעילות רשומה</p>
+                          <p className="text-xs text-charcoal/65 py-2 font-sans">אין פעילות רשומה</p>
                         ) : (
-                          <div className="divide-y divide-parchment/50">
+                          <div className="divide-y divide-black/[0.06]">
                             {entries.map((entry) => (
-                              <div key={entry.id} className="flex items-start gap-4 py-2 text-xs font-sans">
-                                <span className="text-charcoal/40 font-mono w-36 shrink-0 pt-0.5">{formatAuditTs(entry.created_at)}</span>
-                                <span className="text-charcoal/70 w-28 shrink-0 pt-0.5">{ACTION_LABELS[entry.action] ?? entry.action}</span>
-                                <span className="flex flex-col gap-0.5 flex-1">
+                              <div key={entry.id} className="flex items-center gap-4 py-2 text-xs font-sans">
+                                <span className="text-charcoal/60 font-mono w-36 shrink-0">{formatAuditTs(entry.created_at)}</span>
+                                <span className="text-charcoal/80 w-28 shrink-0">{ACTION_LABELS[entry.action] ?? entry.action}</span>
+                                <span className="flex flex-wrap items-center gap-x-3 gap-y-0.5 flex-1">
                                   {entry.previous_status && entry.new_status && (
-                                    <span className="flex items-center gap-1.5 text-charcoal/50">
+                                    <span className="flex items-center gap-1.5 text-charcoal/65">
                                       <span className={STATUS_COLORS[entry.previous_status]}>{STATUS_LABELS[entry.previous_status] ?? entry.previous_status}</span>
-                                      <span className="text-charcoal/30">←</span>
+                                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="inline shrink-0 text-charcoal/35"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                                       <span className={STATUS_COLORS[entry.new_status]}>{STATUS_LABELS[entry.new_status] ?? entry.new_status}</span>
                                     </span>
                                   )}
                                   {entry.previous_count != null && entry.new_count != null && entry.previous_count !== entry.new_count && (
-                                    <span className="text-charcoal/40">{entry.previous_count} → {entry.new_count} אורחים</span>
+                                    <span className="text-charcoal/65 flex items-center gap-1.5">{entry.previous_count} <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="inline shrink-0 text-charcoal/35"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> {entry.new_count} אורחים</span>
                                   )}
                                   {entry.action === 'admin_edit' && Array.isArray(entry.metadata?.fields) && (
-                                    <span className="text-charcoal/35">{(entry.metadata.fields as string[]).join(', ') as string}</span>
-                                  )}
-                                  {entry.ip_address && (
-                                    <span className="text-charcoal/30 font-mono" dir="ltr">{entry.ip_address}</span>
+                                    <span className="text-charcoal/60">{(entry.metadata.fields as string[]).join(', ') as string}</span>
                                   )}
                                 </span>
+                                {entry.ip_address && (
+                                  <span className="text-charcoal/50 font-mono text-[10px] shrink-0" dir="ltr">{entry.ip_address}</span>
+                                )}
                               </div>
                             ))}
                           </div>
@@ -545,14 +545,14 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
             className="w-full max-w-lg bg-white rounded-t-2xl shadow-2xl overflow-hidden animate-fade-up"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between px-5 py-4 border-b border-parchment">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-black/[0.08]">
               <div>
                 <h3 className="font-serif text-lg text-charcoal">{modalGuest.name}</h3>
-                <p className="text-xs text-charcoal/40 font-sans">יומן פעילות</p>
+                <p className="text-xs text-charcoal/65 font-sans">יומן פעילות</p>
               </div>
               <button
                 onClick={() => setAuditModal(null)}
-                className="p-2 text-charcoal/40 hover:text-charcoal hover:bg-parchment rounded-xl transition-colors"
+                className="p-2 text-charcoal/55 hover:text-charcoal hover:bg-black/[0.05] rounded-xl transition-colors"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
@@ -561,11 +561,11 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
             </div>
             <div className="max-h-[60vh] overflow-y-auto">
               {auditLoading === auditModal ? (
-                <p className="text-center text-charcoal/40 py-12 text-sm font-sans">טוען...</p>
+                <p className="text-center text-charcoal/65 py-12 text-sm font-sans">טוען...</p>
               ) : modalEntries.length === 0 ? (
-                <p className="text-center text-charcoal/40 py-12 text-sm font-sans">אין פעילות רשומה</p>
+                <p className="text-center text-charcoal/65 py-12 text-sm font-sans">אין פעילות רשומה</p>
               ) : (
-                <div className="divide-y divide-parchment/60">
+                <div className="divide-y divide-black/[0.07]">
                   {modalEntries.map((entry) => (
                     <div key={entry.id} className="px-5 py-3.5 flex gap-3 items-start">
                       <div className="w-1.5 h-1.5 rounded-full bg-gold/50 mt-2 shrink-0" />
@@ -574,25 +574,25 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
                           <span className="text-sm text-charcoal/80 font-medium font-sans">
                             {ACTION_LABELS[entry.action] ?? entry.action}
                           </span>
-                          <span className="text-xs text-charcoal/40 font-mono shrink-0 mt-0.5">
+                          <span className="text-xs text-charcoal/60 font-mono shrink-0 mt-0.5">
                             {formatAuditTs(entry.created_at)}
                           </span>
                         </div>
                         {entry.previous_status && entry.new_status && (
-                          <p className="text-xs text-charcoal/50 mt-1 flex items-center gap-1">
+                          <p className="text-xs text-charcoal/70 mt-1 flex items-center gap-1.5">
                             <span className={STATUS_COLORS[entry.previous_status]}>{STATUS_LABELS[entry.previous_status] ?? entry.previous_status}</span>
-                            <span className="text-charcoal/30">→</span>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="inline shrink-0 text-charcoal/35"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                             <span className={STATUS_COLORS[entry.new_status]}>{STATUS_LABELS[entry.new_status] ?? entry.new_status}</span>
                           </p>
                         )}
                         {entry.previous_count != null && entry.new_count != null && entry.previous_count !== entry.new_count && (
-                          <p className="text-xs text-charcoal/40 mt-0.5">{entry.previous_count} → {entry.new_count} אורחים</p>
+                          <p className="text-xs text-charcoal/65 mt-0.5 flex items-center gap-1.5">{entry.previous_count} <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="inline shrink-0 text-charcoal/35"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> {entry.new_count} אורחים</p>
                         )}
                         {entry.action === 'admin_edit' && Array.isArray(entry.metadata?.fields) && (
-                          <p className="text-xs text-charcoal/35 mt-0.5">{(entry.metadata.fields as string[]).join(', ') as string}</p>
+                          <p className="text-xs text-charcoal/60 mt-0.5">{(entry.metadata.fields as string[]).join(', ') as string}</p>
                         )}
                         {entry.ip_address && (
-                          <p className="text-xs text-charcoal/30 font-mono mt-0.5" dir="ltr">{entry.ip_address}</p>
+                          <p className="text-xs text-charcoal/55 font-mono mt-0.5" dir="ltr">{entry.ip_address}</p>
                         )}
                       </div>
                     </div>
