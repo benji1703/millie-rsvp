@@ -16,7 +16,10 @@ export async function GET(
   req: NextRequest,
   { params }: { params: { code: string } }
 ) {
-  const ip = req.headers.get('x-forwarded-for') ?? 'unknown'
+  const ip =
+    req.headers.get('x-forwarded-for')?.split(',')[0].trim() ??
+    req.headers.get('x-real-ip') ??
+    'unknown'
   if (!rateLimit(ip, 30, 60_000)) {
     return secureJson({ error: 'Too many requests' }, { status: 429 })
   }
@@ -40,13 +43,13 @@ export async function GET(
     return secureJson({ error: 'Not found' }, { status: 404 })
   }
 
-  void Promise.resolve(supabaseAdmin.from('rsvp_audit_log').insert({
+  await supabaseAdmin.from('rsvp_audit_log').insert({
     guest_id: guest.id,
     action: 'view',
     ip_address: ip,
     user_agent: req.headers.get('user-agent') ?? null,
     metadata: { timestamp: new Date().toISOString() },
-  })).catch(() => {})
+  })
 
   return secureJson(guest)
 }
