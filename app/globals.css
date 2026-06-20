@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Hebrew:wght@300;400;500;600&family=Heebo:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Noto Serif Hebrew', 'Frank Ruhl Libre', serif;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-charcoal text-cream font-sans font-medium text-sm tracking-wide rounded-xl transition-all hover:bg-charcoal-hover active:scale-[0.98] touch-manipulation select-none cursor-pointer disabled:opacity-40;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent text-charcoal/70 font-sans font-normal text-sm tracking-wide rounded-xl border border-charcoal/15 transition-all hover:border-charcoal/35 active:scale-[0.98] touch-manipulation select-none cursor-pointer disabled:opacity-40;
+  }
+
+  .input-base {
+    @apply border border-gold/30 rounded px-2 py-1 text-sm w-full focus:outline-none focus:ring-1 focus:ring-gold/50 bg-white;
+  }
+
+  /* Gold ornament divider */
+  .divider-ornament {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    color: #B8A88A;
+    font-size: 0.5rem;
+    letter-spacing: 0.4em;
+  }
+  .divider-ornament::before,
+  .divider-ornament::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, currentColor, transparent);
+  }
+}

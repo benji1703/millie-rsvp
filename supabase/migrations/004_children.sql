@@ -1,0 +1,3 @@
+ALTER TABLE guests
+  ADD COLUMN children_allowed BOOLEAN NOT NULL DEFAULT FALSE,
+  ADD COLUMN children_count INTEGER;
