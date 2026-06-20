@@ -100,7 +100,7 @@ export default function AddGuestForm({ onAdded }: Props) {
               <button type="button" onClick={() => setPax(Math.max(1, pax - 1))}
                 className="w-7 h-9 rounded-lg border border-black/[0.12] bg-black/[0.03] hover:bg-black/[0.07] text-charcoal/70 text-base leading-none select-none transition-colors">−</button>
               <input
-                type="number" min="1" max="20" value={pax}
+                type="text" inputMode="numeric" pattern="[0-9]*" value={pax}
                 onChange={(e) => setPax(Math.max(1, Math.min(20, parseInt(e.target.value) || 1)))}
                 className="w-8 h-9 border border-black/[0.12] rounded-lg text-center text-sm font-sans bg-white focus:outline-none focus:ring-1 focus:ring-black/20 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none"
               />
@@ -132,7 +132,7 @@ export default function AddGuestForm({ onAdded }: Props) {
                   <button type="button" onClick={() => setChildrenCount(Math.max(0, childrenCount - 1))}
                     className="w-6 h-9 rounded-lg border border-black/[0.12] bg-black/[0.03] hover:bg-black/[0.07] text-charcoal/70 text-base leading-none select-none transition-colors">−</button>
                   <input
-                    type="number" min="0" max="20" value={childrenCount}
+                    type="text" inputMode="numeric" pattern="[0-9]*" value={childrenCount}
                     onChange={(e) => setChildrenCount(Math.max(0, Math.min(20, parseInt(e.target.value) || 0)))}
                     className="w-8 h-9 border border-black/[0.12] rounded-lg text-center text-sm font-sans bg-white focus:outline-none focus:ring-1 focus:ring-black/20 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none"
                   />

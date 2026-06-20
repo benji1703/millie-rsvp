@@ -43,11 +43,12 @@ interface Props {
   sort: SortCol
   order: 'asc' | 'desc'
   onSort: (col: SortCol) => void
+  onSortDirect: (col: SortCol, order: 'asc' | 'desc') => void
   onUpdated: (guest: Guest) => void
   onDeleted: (guestId: string) => void
 }
 
-export default function GuestTable({ guests, sort, order, onSort, onUpdated, onDeleted }: Props) {
+export default function GuestTable({ guests, sort, order, onSort, onSortDirect, onUpdated, onDeleted }: Props) {
   const [copied, setCopied] = useState<string | null>(null)
   const [copiedMsg, setCopiedMsg] = useState<string | null>(null)
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -170,9 +171,34 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
 
   const thSortCls = 'cursor-pointer select-none hover:text-charcoal/80 transition-colors group'
 
+  const SORT_OPTIONS: { value: string; label: string; col: SortCol; ord: 'asc' | 'desc' }[] = [
+    { value: 'name__asc',           label: 'שם א-ת',            col: 'name',          ord: 'asc'  },
+    { value: 'name__desc',          label: 'שם ת-א',            col: 'name',          ord: 'desc' },
+    { value: 'guest_count__desc',   label: 'הכי הרבה אורחים',  col: 'guest_count',   ord: 'desc' },
+    { value: 'guest_count__asc',    label: 'הכי פחות אורחים',  col: 'guest_count',   ord: 'asc'  },
+    { value: 'rsvp_status__asc',    label: 'סטטוס',             col: 'rsvp_status',   ord: 'asc'  },
+    { value: 'last_activity__desc', label: 'עדכון אחרון',       col: 'last_activity', ord: 'desc' },
+  ]
+
   /* ── Mobile card list ── */
   const mobileList = (
     <div className="md:hidden space-y-2">
+      {/* Sort selector */}
+      <div className="flex items-center gap-2 mb-1">
+        <label className="text-xs text-charcoal/60 font-sans shrink-0">מיון:</label>
+        <select
+          dir="rtl"
+          value={`${sort}__${order}`}
+          onChange={(e) => {
+            const opt = SORT_OPTIONS.find(o => o.value === e.target.value)
+            if (opt) onSortDirect(opt.col, opt.ord)
+          }}
+          className="flex-1 text-sm font-sans bg-white border border-black/[0.10] rounded-xl px-3 py-2 focus:outline-none focus:ring-1 focus:ring-black/20"
+        >
+          {SORT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+        </select>
+      </div>
+
       {guests.length === 0 && (
         <div className="bg-white rounded-2xl p-8 text-center text-charcoal/40 text-sm">עוד לא נוספו אורחים</div>
       )}
@@ -190,13 +216,13 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
                   <option value="declined">לא מגיע</option>
                 </select>
                 <div className="flex gap-2 items-center">
-                  <input type="number" min="1" max="20" className={`${inputCls} w-20 text-center`} value={editData.guestCount} onChange={(e) => setEditData(d => ({ ...d, guestCount: e.target.value }))} />
+                  <input type="text" inputMode="numeric" pattern="[0-9]*" className={`${inputCls} w-20 text-center`} value={editData.guestCount} onChange={(e) => setEditData(d => ({ ...d, guestCount: e.target.value }))} />
                   <label className="flex items-center gap-1.5 cursor-pointer text-sm text-charcoal/60">
                     <input type="checkbox" checked={editData.childrenAllowed} onChange={(e) => setEditData(d => ({ ...d, childrenAllowed: e.target.checked }))} className="w-4 h-4 accent-charcoal" />
                     ילדים
                   </label>
                   {editData.childrenAllowed && (
-                    <input type="number" min="0" max="20" className={`${inputCls} w-20 text-center`} value={editData.childrenCount} onChange={(e) => setEditData(d => ({ ...d, childrenCount: e.target.value }))} />
+                    <input type="text" inputMode="numeric" pattern="[0-9]*" className={`${inputCls} w-20 text-center`} value={editData.childrenCount} onChange={(e) => setEditData(d => ({ ...d, childrenCount: e.target.value }))} />
                   )}
                 </div>
                 <div className="flex gap-2">
@@ -353,9 +379,9 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
                     {isEditing ? (
                       <div className="flex flex-row items-center gap-1.5 justify-end flex-nowrap">
                         <input
-                          type="number"
-                          min="1"
-                          max="20"
+                          type="text"
+                          inputMode="numeric"
+                          pattern="[0-9]*"
                           className="input-base w-12 text-center"
                           value={editData.guestCount}
                           onChange={(e) => setEditData((d) => ({ ...d, guestCount: e.target.value }))}
@@ -371,7 +397,9 @@ export default function GuestTable({ guests, sort, order, onSort, onUpdated, onD
                         </label>
                         {editData.childrenAllowed && (
                           <input
-                            type="number" min="0" max="20"
+                            type="text"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
                             className="input-base w-12 text-center"
                             value={editData.childrenCount}
                             onChange={(e) => setEditData(d => ({ ...d, childrenCount: e.target.value }))}

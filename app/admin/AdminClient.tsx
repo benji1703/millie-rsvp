@@ -82,6 +82,11 @@ export default function AdminClient({ initialGuests }: Props) {
     }
   }
 
+  function onSortDirect(col: SortCol, ord: 'asc' | 'desc') {
+    setSort(col)
+    setOrder(ord)
+  }
+
   function handleAdded(guest: Guest) {
     setGuests((prev) => [...prev, guest])
   }
@@ -135,7 +140,7 @@ export default function AdminClient({ initialGuests }: Props) {
           onChange={(e) => setSearch(e.target.value)}
           className="w-full bg-white border border-black/[0.10] rounded-xl px-4 py-2.5 text-sm font-sans focus:outline-none focus:ring-1 focus:ring-black/20 mb-4"
         />
-        <GuestTable guests={guests} sort={sort} order={order} onSort={onSort} onUpdated={handleUpdated} onDeleted={handleDeleted} />
+        <GuestTable guests={guests} sort={sort} order={order} onSort={onSort} onSortDirect={onSortDirect} onUpdated={handleUpdated} onDeleted={handleDeleted} />
       </div>
     </div>
   )
