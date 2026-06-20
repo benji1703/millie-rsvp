@@ -9,6 +9,10 @@ export async function GET(req: NextRequest) {
 
   const guestId = new URL(req.url).searchParams.get('guestId')
 
+  if (guestId !== null && (typeof guestId !== 'string' || guestId.trim().length === 0 || guestId.length > 100)) {
+    return NextResponse.json({ error: 'Invalid guestId' }, { status: 400 })
+  }
+
   let query = supabaseAdmin
     .from('rsvp_audit_log')
     .select('*')

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { rateLimit } from '@/lib/rateLimit'
+import { checkCsrf } from '@/lib/csrf'
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 
@@ -12,6 +13,10 @@ function secureJson(data: unknown, init?: ResponseInit) {
 }
 
 export async function POST(req: NextRequest) {
+  if (!checkCsrf(req)) {
+    return secureJson({ error: 'invalid request' }, { status: 403 })
+  }
+
   const ip = req.headers.get('x-forwarded-for') ?? 'unknown'
   if (!rateLimit(ip, 10, 60_000)) {
     return secureJson({ error: 'Too many requests' }, { status: 429 })
@@ -39,8 +44,8 @@ export async function POST(req: NextRequest) {
   }
 
   if (attending) {
-    if (!guestCount || !Number.isInteger(guestCount) || guestCount < 1 || guestCount > 20) {
-      return secureJson({ error: 'guestCount must be an integer between 1 and 20' }, { status: 400 })
+    if (!guestCount || !Number.isInteger(guestCount) || guestCount < 1 || guestCount > 10) {
+      return secureJson({ error: 'מספר אורחים לא תקין' }, { status: 400 })
     }
   }
 
@@ -57,7 +62,7 @@ export async function POST(req: NextRequest) {
   if (attending && guest.children_allowed) {
     const cc = childrenCount ?? 0
     if (!Number.isInteger(cc) || cc < 0 || cc > 20) {
-      return secureJson({ error: 'childrenCount must be an integer between 0 and 20' }, { status: 400 })
+      return secureJson({ error: 'מספר ילדים לא תקין' }, { status: 400 })
     }
   }
 

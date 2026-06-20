@@ -58,7 +58,7 @@ export default function RsvpFormStep({ guestId, defaultCount, defaultChildrenCou
         <Counter
           value={guestCount}
           onDec={() => setGuestCount((c) => Math.max(1, c - 1))}
-          onInc={() => setGuestCount((c) => Math.min(15, c + 1))}
+          onInc={() => setGuestCount((c) => Math.min(10, c + 1))}
           label="מבוגרים"
         />
       </div>

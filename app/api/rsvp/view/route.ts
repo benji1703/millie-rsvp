@@ -1,10 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
+import { checkCsrf } from '@/lib/csrf'
+import { isNonEmptyString } from '@/lib/validate'
 
 export async function POST(req: NextRequest) {
+  if (!checkCsrf(req)) {
+    return NextResponse.json({ error: 'invalid request' }, { status: 403 })
+  }
+
   try {
-    const { guestId } = await req.json()
-    if (!guestId || typeof guestId !== 'string') {
+    const body = await req.json()
+    const { guestId } = body
+
+    if (!isNonEmptyString(guestId, 100)) {
       return NextResponse.json({ error: 'Invalid guestId' }, { status: 400 })
     }
 
